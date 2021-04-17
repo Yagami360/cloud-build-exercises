@@ -1,6 +1,8 @@
 # Clould Build を用いた CI/CD
 Clould Build を用いた CI/CD の練習用コード。<br>
-Clould Build を用いて、`git push` をトリガーに CI/CD 処理を自動的に行う。
+Clould Build を用いて、`git push` をトリガーに、各種 GCPリソース（GCE, GKE, CloudFunction など）上で CI/CD 処理を自動的に行う。
+
+<img src="https://user-images.githubusercontent.com/25688193/115104771-94c7d600-9f95-11eb-913c-a43b578b75b5.png" width="500"><br>
 
 ## ■ 使用法
 

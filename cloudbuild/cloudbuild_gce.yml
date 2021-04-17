@@ -1,0 +1,27 @@
+steps:
+  # Container Registry 上で docker image 作成
+  - name: 'gcr.io/cloud-builders/docker'
+    id: docker build
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/sample-image', './api']
+
+  # Container Registry 上で docker image を登録
+  - name: 'gcr.io/cloud-builders/docker'
+    id: docker push
+    args: ['push', 'gcr.io/$PROJECT_ID/sample-image']
+
+  # GCE インスタンス作成
+  
+  # API 起動（docker-compose 使用）
+  - name: gcr.io/$PROJECT_ID/docker-compose
+    id: run api with docker-compose
+    args: ['-f', 'api/docker-compose.yml', 'up', '-d']
+
+  # リクエスト処理実行
+  - name: 'python'
+    id: run request for testing
+    args: ['python3', 'api/request.py', '--host', '0.0.0.0', '--port', '5000', '--request_value', '0', '--debug']
+  - name: 'python'
+    id: run request for testing
+    args: ['python3', 'api/request.py', '--host', '0.0.0.0', '--port', '5000', '--request_value', '1', '--debug']
+
+

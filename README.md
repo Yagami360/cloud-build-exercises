@@ -22,28 +22,52 @@ Clould Build を用いて、`git push` をトリガーに CI/CD 処理を自動�
         <img src="https://user-images.githubusercontent.com/25688193/115101942-e61a9a00-9f82-11eb-86a5-1026f41a5fdf.png" width="500"><br>
     1. 本レポジトリが、Private 公開の場合は、[非公開 GitHub リポジトリへのアクセス](https://cloud.google.com/cloud-build/docs/access-private-github-repos?hl=ja) 記載の方法で ssh 鍵等の設定を行い、Cloud Build からアクセスできるようにする。
 
-1. `cloudbuild.yml` の設定とトリガー設定<br>
-    1. CI/CD を行うトリガー（git push など）を、[Cloud Build のコンソール画面](https://console.cloud.google.com/cloud-build/triggers?folder=&organizationId=&project=my-project2-303004) から設定する
+1. CI/CD を行う GCP サービスの IAM 権限設定<br>
+    「[Cloud Build のサービス アカウント権限](https://console.cloud.google.com/cloud-build/settings/service-account?folder=&organizationId=&project=my-project2-303004)」のページで、Cloud Build で CI/CD を行う GCP サービスの IAM 権限を有効化する。<br>
+
+
+1. CI/CD を行うトリガーと `cloudbuild.yml` の設定<br>
+    1. [Cloud Build のコンソール画面](https://console.cloud.google.com/cloud-build/triggers?folder=&organizationId=&project=my-project2-303004) から、CI/CD を行うトリガー（git push など）の設定と cloudbuild ディレクトリ以下の `cloudbuild.yml` の反映を行う。
+
+    > README.md や .gitignore などのトリガーに含またくないファイルに関しても、この画面の「無視されるファイルフィルタ」から設定できる。
+
+    - GCE 用 : `cloudbuild/cloudbuild_gce.yml`<br>
+        <img src="https://user-images.githubusercontent.com/25688193/115104516-e66f6100-9f93-11eb-985c-2077ffb99357.png" width="400"><br>
+
+    - GKE 用 : 準備中<br>
 
 
 > これらの処理を CLI で自動化できないか？
 
 ### ◎ CI/CD 処理
 
+<!--
 - ローカル環境での CI/CD : <br>
 	```sh
 	$ sh run_ci_cd_local.sh
 	```
-	1. `git push` をトリガーに、API コードの docker image を作成
-	1. リクエスト処理を実行し、正しいレスポンスが返ってくるか確認
+-->
 
 - GCE 環境での CI/CD<br>
-    xxx
+	```sh
+	$ sh run_ci_cd_gce.sh
+	```
+
+    <!--
+	1. `git push` をトリガーに、Container Registry に API コードの docker image を作成 & 登録
+    1. GCE インスタンスを作成
+	1. GCE インスタンスにリクエスト処理を実行し、正しいレスポンスが返ってくるか確認
+    -->
 
 - GKE 環境での CI/CD<br>
+    準備中...
+
+
+<!--
 	```sh
 	$ sh run_ci_cd_gke.sh
 	```
 	1. `git push` をトリガーに、Google Container Registry に API コードの docker image をアップロード
 	1. GKE クラスタ作成
 	1. 
+-->

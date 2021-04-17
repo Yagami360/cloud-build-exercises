@@ -4,12 +4,17 @@ steps:
   # Container Registry 上で docker image 作成
   - name: 'gcr.io/cloud-builders/docker'  # Docker を実行するコンテナイメージ
     id: docker build
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/api-sample-image', './api']
+    args: [
+      'build', 
+      '-t', 'gcr.io/${PROJECT_ID}/api-sample-image', 
+      '--cache-from', 'gcr.io/${PROJECT_ID}/api-sample-image:latest',
+      './api'
+    ]
 
   # Container Registry 上で docker image を登録
   - name: 'gcr.io/cloud-builders/docker'
     id: docker push
-    args: ['push', 'gcr.io/$PROJECT_ID/api-sample-image']
+    args: ['push', 'gcr.io/${PROJECT_ID}/api-sample-image']
 
 # ビルド完了後の docker image を Container Registry に保管
-images: ['gcr.io/$PROJECT_ID/api-sample-image']
+images: ['gcr.io/${PROJECT_ID}/api-sample-image']

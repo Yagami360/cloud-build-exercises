@@ -18,7 +18,7 @@ sleep 180
 gcloud auth configure-docker
 
 # API 実行（デプロイした docker image 実行）
-docker run gcr.io/${PROJECT_ID}/${IMAGE_NAME}
+docker run -it --rm -d gcr.io/${PROJECT_ID}/${IMAGE_NAME}
 
 # テスト実行（リクエスト処理）
 python api/request.py --host 0.0.0.0 --port 5000 --request_value 1 --debug

@@ -24,7 +24,8 @@ app.config["JSON_SORT_KEYS"] = False    # ソートをそのまま
 @app.route('/')
 def hello_world():
     target = os.environ.get('TARGET', 'World')
-    return 'Hello {}!\n'.format(target)
+    #return 'Hello {}!\n'.format(target)
+    return 'Hello Clould Build{}!\n'.format(target)
 
 #================================================================
 # "http://host_ip:port_id/api_server" にリクエスト送信時の処理

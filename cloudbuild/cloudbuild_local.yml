@@ -11,18 +11,5 @@ steps:
     id: docker push
     args: ['push', 'gcr.io/$PROJECT_ID/api-sample-image']
 
-  # API 起動（docker-compose 使用）
-  - name: gcr.io/$PROJECT_ID/docker-compose
-    id: run api with docker-compose
-    args: ['-f', 'api/docker-compose.yml', 'up', '-d']
-
-  # リクエスト処理実行
-  #- name: 'python'
-  #  id: run request for testing1
-  #  args: ['python3', 'api/request.py', '--host', '0.0.0.0', '--port', '5000', '--request_value', '0', '--debug']
-  #- name: 'python'
-  #  id: run request for testing2
-  #  args: ['python3', 'api/request.py', '--host', '0.0.0.0', '--port', '5000', '--request_value', '1', '--debug']
-
 # ビルド完了後の docker image を Container Registry に保管
 images: ['gcr.io/$PROJECT_ID/api-sample-image']

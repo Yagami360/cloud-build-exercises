@@ -10,11 +10,16 @@ git add .
 git commit -m "a"
 git push origin ${TRIGER_BRANCH_NAME}
 
+# ビルド結果の表示
+sleep 180
+#gcloud builds describe ${BUILD_ID}
+
 # Container Registry とやり取りするときに Container Registry 認証情報を使用するよう Docker を構成
 gcloud auth configure-docker
 
-# docker image を実行
+# API 実行（デプロイした docker image 実行）
 docker run gcr.io/${PROJECT_ID}/${IMAGE_NAME}
 
-# ビルド結果の表示
-#gcloud builds describe ${BUILD_ID}
+# テスト実行（リクエスト処理）
+python api/request.py --host 0.0.0.0 --port 5000 --request_value 1 --debug
+python api/request.py --host 0.0.0.0 --port 5000 --request_value 0 --debug

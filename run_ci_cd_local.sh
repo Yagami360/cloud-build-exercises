@@ -14,7 +14,7 @@ git push origin ${TRIGER_BRANCH_NAME}
 gcloud auth configure-docker
 
 # docker image を実行
-docker run gcr.io/${PROJECT_ID}/IMAGE_NAME
+docker run gcr.io/${PROJECT_ID}/${IMAGE_NAME}
 
 # ビルド結果の表示
 #gcloud builds describe ${BUILD_ID}

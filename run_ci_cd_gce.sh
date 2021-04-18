@@ -5,7 +5,16 @@ TRIGER_BRANCH_NAME=gce
 #-----------------------
 # CI/CD トリガー発行
 #-----------------------
-git checkout -b ${TRIGER_BRANCH_NAME}
+# ${TRIGER_BRANCH_NAME} ブランチが存在しない場合
+if [ `git branch | grep ${TRIGER_BRANCH_NAME}` != ${TRIGER_BRANCH_NAME} ] ; then
+    git checkout -b ${TRIGER_BRANCH_NAME}
+fi
+
+# 現在のブランチが ${TRIGER_BRANCH_NAME} でない場合
+if [ `git branch --contains=HEAD` != ${TRIGER_BRANCH_NAME} ] ; then
+    git checkout ${TRIGER_BRANCH_NAME}
+fi
+
 git add .
 git commit -m "run ci/cd on ${TRIGER_BRANCH_NAME} branch"
 git push origin ${TRIGER_BRANCH_NAME}

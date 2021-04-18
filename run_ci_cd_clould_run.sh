@@ -7,7 +7,7 @@ HOST_ADRESS=https://${SERVICE_NAME}-zilzej7vmq-uc.a.run.app
 PORT=8080
 
 # CI/CD トリガー発行
-git checkout -b ${TRIGER_BRANCH_NAME}
+#git checkout -b ${TRIGER_BRANCH_NAME}
 git add .
 git commit -m "a"
 git push origin ${TRIGER_BRANCH_NAME}

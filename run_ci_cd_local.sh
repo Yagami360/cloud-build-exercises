@@ -20,7 +20,7 @@ fi
 # 現在のブランチが ${TRIGER_BRANCH_NAME} でない場合
 BRANCH_NAME_TMP=`git branch --contains=HEAD`
 echo "BRANCH_NAME_TMP : ${BRANCH_NAME_TMP}"
-if [ ${BRANCH_NAME_TMP} != ${TRIGER_BRANCH_NAME} ] ; then
+if [ ${BRANCH_NAME_TMP} != "* ${TRIGER_BRANCH_NAME}" ] ; then
     git checkout ${TRIGER_BRANCH_NAME}
 fi
 

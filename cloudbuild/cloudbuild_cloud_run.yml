@@ -15,6 +15,11 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: docker push
     args: ['push', 'gcr.io/${PROJECT_ID}/api-sample-image']
-  
+
+  # Cloud Run 作成し、docker image を Cloud Run にデプロイ
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: ['run', 'deploy', 'cloud-build-sample', '--image', 'gcr.io/${PROJECT_ID}/api-sample-image', '--region', 'asia-northeast1-a', '--platform', 'managed']
+
 # ビルド完了後の docker image を Container Registry に保管
 images: ['gcr.io/${PROJECT_ID}/api-sample-image']

@@ -1,12 +1,18 @@
 # name タグ : コマンドを実行するコンテナイメージ
 # entrypoint タグ : name で指定したコンテナイメージのデフォルトのエントリーポイント（dockerコンテナなら docker コマンドなど）を使用しない場合に指定
 steps:
-  # Container Registry 上で docker image 作成
+  # キャッシュされたイメージを Container Registry から pull
+  # 初めてイメージをビルドする際は docker pull で pull できる既存のイメージがないため、entrypoint を bash に設定し、コマンドの実行で返されるエラーを無視できるようにしている
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: ['-c', 'docker pull gcr.io/${PROJECT_ID}/api-sample-image:latest || exit 0']
+
+# Container Registry 上で docker image 作成
   - name: 'gcr.io/cloud-builders/docker'  # Docker を実行するコンテナイメージ
     id: docker build
     args: [
       'build', 
-      '-t', 'gcr.io/${PROJECT_ID}/api-sample-image', 
+      '-t', 'gcr.io/${PROJECT_ID}/api-sample-image:latest', 
       '--cache-from', 'gcr.io/${PROJECT_ID}/api-sample-image:latest',
       './api'
     ]
@@ -22,7 +28,7 @@ steps:
     args: [
       'run', 'deploy', 'cloud-build-sample', 
       '--image', 'gcr.io/${PROJECT_ID}/api-sample-image:latest', 
-      '--region', 'asia-northeast1-a', 
+      '--region', 'us-central1', 
       '--platform', 'managed'
     ]
 

@@ -15,7 +15,7 @@ git push origin ${TRIGER_BRANCH_NAME}
 # ビルド結果の表示
 BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
 
-for in `seq 1000`
+while :
 do
     echo "ビルド実行中..."
     sleep 1
@@ -28,17 +28,22 @@ do
         # テスト実行（リクエスト処理）
         python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 1 --debug
         python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 0 --debug
+        break
     elif [ ${BUILD_STATUS} = "FAILURE" ] ; then
         echo "ビルド失敗"
         gcloud builds describe ${BUILD_ID}
+        break
     elif [ ${BUILD_STATUS} = "CANCELLED" ] ; then
         echo "ユーザーによるビルドのキャンセル"
         gcloud builds describe ${BUILD_ID}
+        break
     elif [ ${BUILD_STATUS} = "TIMEOUT" ] ; then
         echo "ビルドのタイムアウト"
         gcloud builds describe ${BUILD_ID}
+        break
     elif [ ${BUILD_STATUS} = "FAILED" ] ; then
         echo "ステップのタイムアウト"
         gcloud builds describe ${BUILD_ID}
+        break
     fi
 done

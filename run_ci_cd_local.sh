@@ -11,16 +11,12 @@ PORT=5000
 # CI/CD トリガー発行
 #-----------------------
 # ${TRIGER_BRANCH_NAME} ブランチが存在しない場合
-BRANCH_NAME_TMP=`git branch | grep ${TRIGER_BRANCH_NAME}`
-echo "BRANCH_NAME_TMP : ${BRANCH_NAME_TMP}"
-if [ ${BRANCH_NAME_TMP} != ${TRIGER_BRANCH_NAME} ] ; then
+if [ "`git branch | grep ${TRIGER_BRANCH_NAME} | sed 's/ //g' | sed 's/*//g'`" != "${TRIGER_BRANCH_NAME}" ] ; then
     git checkout -b ${TRIGER_BRANCH_NAME}
 fi
 
 # 現在のブランチが ${TRIGER_BRANCH_NAME} でない場合
-BRANCH_NAME_TMP=`git branch --contains=HEAD`
-echo "BRANCH_NAME_TMP : ${BRANCH_NAME_TMP}"
-if [ ${BRANCH_NAME_TMP} != "* ${TRIGER_BRANCH_NAME}" ] ; then
+if [ "`git branch --contains=HEAD | sed 's/ //g' | sed 's/*//g'`" != "${TRIGER_BRANCH_NAME}" ] ; then
     git checkout ${TRIGER_BRANCH_NAME}
 fi
 

@@ -15,7 +15,7 @@ if [ `git branch | grep ${TRIGER_BRANCH_NAME}` != ${TRIGER_BRANCH_NAME} ] ; then
 fi
 
 # 現在のブランチが ${TRIGER_BRANCH_NAME} でない場合
-if [ ! `git branch --contains=HEAD` != ${TRIGER_BRANCH_NAME} ] ; then
+if [ `git branch --contains=HEAD` != ${TRIGER_BRANCH_NAME} ] ; then
     git checkout ${TRIGER_BRANCH_NAME}
 fi
 

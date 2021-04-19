@@ -23,6 +23,7 @@ fi
 git add .
 git commit -m "run ci/cd on ${TRIGER_BRANCH_NAME} branch"
 git push origin ${TRIGER_BRANCH_NAME}
+sleep 10
 
 #-----------------------
 # Container Registry とやり取りするときに Container Registry 認証情報を使用するよう Docker を構成

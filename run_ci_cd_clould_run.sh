@@ -3,7 +3,6 @@ set -eu
 TRIGER_BRANCH_NAME=cloud_run
 PROJECT_ID=my-project2-303004
 SERVICE_NAME=cloud-build-sample
-PORT=8080
 
 #-----------------------
 # CI/CD トリガー発行
@@ -21,6 +20,7 @@ fi
 git add .
 git commit -m "run ci/cd on ${TRIGER_BRANCH_NAME} branch"
 git push origin ${TRIGER_BRANCH_NAME}
+sleep 10
 
 #-----------------------
 # ビルド待ち＆テスト処理
@@ -29,18 +29,19 @@ BUILD_ID=`gcloud builds list | sed -n 2p | sed 's/ //g' | awk '{print $1}'`
 
 while :
 do
-    sleep 5
     BUILD_STATUS=`gcloud builds list | sed -n 2p | sed 's/ (+. more//g' | awk '{print $6}'`
     echo "${BUILD_STATUS} : ビルド実行中..."
+    sleep 5
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
+        sleep 5
         gcloud builds describe ${BUILD_ID}
 
         # テスト実行（リクエスト処理）
-        HOST_ADRESS=`gcloud run services list --platform managed | grep ${SERVICE_NAME} | awk '{print $4}'`
-        python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 1 --debug
-        python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 0 --debug
+        CLOUD_RUN_URL=`gcloud run services list --platform managed | grep ${SERVICE_NAME} | awk '{print $4}'`
+        python api/request.py --url ${CLOUD_RUN_URL} --use_url --request_value 1 --debug
+        python api/request.py --url ${CLOUD_RUN_URL} --use_url --request_value 0 --debug
         break
     elif [ ${BUILD_STATUS} = "FAILURE" ] ; then
         echo "${BUILD_STATUS} : ビルド失敗"

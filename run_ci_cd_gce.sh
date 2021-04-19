@@ -15,10 +15,10 @@ if [ "`git branch --contains=HEAD | sed 's/ //g' | sed 's/*//g'`" != "${TRIGER_B
     git checkout ${TRIGER_BRANCH_NAME}
 fi
 
-
 git add .
 git commit -m "run ci/cd on ${TRIGER_BRANCH_NAME} branch"
 git push origin ${TRIGER_BRANCH_NAME}
+sleep 10
 
 #-----------------------
 # ビルド待ち＆テスト処理
@@ -33,6 +33,7 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
+        sleep 5
         gcloud builds describe ${BUILD_ID}
 
         # テスト実行（リクエスト処理）

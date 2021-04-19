@@ -29,7 +29,8 @@ steps:
       'run', 'deploy', 'cloud-build-sample', 
       '--image', 'gcr.io/${PROJECT_ID}/api-sample-image:latest', 
       '--region', 'us-central1', 
-      '--platform', 'managed'
+      '--platform', 'managed',
+      '--allow-unauthenticated'   # IAM 認証なし
     ]
 
 # ビルド完了後の docker image を Container Registry に保管

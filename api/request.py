@@ -17,6 +17,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, default="localhost", help="API サーバーのホスト名（コンテナ名 or コンテナ ID）")
     parser.add_argument('--port', type=str, default="5000", help="API サーバーのポート番号")
+    parser.add_argument('--url', type=str, default="https://", help="URL")
+    parser.add_argument('--use_url', action='store_true', help="URL指定有効化")
     parser.add_argument('--request_value', type=int, default=0, help="リクエストデータの値")
     parser.add_argument('--debug', action='store_true', help="デバッグモード有効化")
     args = parser.parse_args()
@@ -24,8 +26,12 @@ if __name__ == "__main__":
         for key, value in vars(args).items():
             print('%s: %s' % (str(key), str(value)))
     
-    api_server_url = "http://" + args.host + ":" + args.port + "/api_server"
-    #api_server_url = "http://" + args.host + ":" + args.port + "/"
+    if(args.use_url):
+        api_server_url = args.url + "/api_server"
+    else:
+        api_server_url = "http://" + args.host + ":" + args.port + "/api_server"
+        #api_server_url = "http://" + args.host + ":" + args.port + "/"
+    
     if( args.debug ):
         print( "api_server_url : ", api_server_url )
 

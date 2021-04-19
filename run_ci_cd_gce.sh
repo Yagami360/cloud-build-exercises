@@ -23,8 +23,6 @@ sleep 10
 #-----------------------
 # ビルド待ち＆テスト処理
 #-----------------------
-BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
-
 while :
 do
     BUILD_STATUS=`gcloud builds list | sed -n 2p | sed 's/ (+. more//g' | awk '{print $6}'`
@@ -33,7 +31,7 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
-        sleep 5
+        BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
         gcloud builds describe ${BUILD_ID}
 
         # テスト実行（リクエスト処理）
@@ -42,18 +40,22 @@ do
         break
     elif [ ${BUILD_STATUS} = "FAILURE" ] ; then
         echo "${BUILD_STATUS} : ビルド失敗"
+        BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
         gcloud builds describe ${BUILD_ID}
         break
     elif [ ${BUILD_STATUS} = "CANCELLED" ] ; then
         echo "${BUILD_STATUS} : ユーザーによるビルドのキャンセル"
+        BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
         gcloud builds describe ${BUILD_ID}
         break
     elif [ ${BUILD_STATUS} = "TIMEOUT" ] ; then
         echo "${BUILD_STATUS} : ビルドのタイムアウト"
+        BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
         gcloud builds describe ${BUILD_ID}
         break
     elif [ ${BUILD_STATUS} = "FAILED" ] ; then
         echo "${BUILD_STATUS} : ステップのタイムアウト"
+        BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
         gcloud builds describe ${BUILD_ID}
         break
     fi

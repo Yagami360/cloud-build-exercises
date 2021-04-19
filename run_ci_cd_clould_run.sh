@@ -33,6 +33,7 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
+        sleep 5
         BUILD_ID=`gcloud builds list | sed -n 2p | sed 's/ //g' | awk '{print $1}'`
         gcloud builds describe ${BUILD_ID}
 

@@ -43,6 +43,7 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
+        sleep 5
         gcloud builds describe ${BUILD_ID}
 
         # API 実行（デプロイした docker image 実行）

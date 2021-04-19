@@ -35,7 +35,7 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
-        sleep 5
+        sleep 10
         gcloud builds describe ${BUILD_ID}
 
         # テスト実行（リクエスト処理）

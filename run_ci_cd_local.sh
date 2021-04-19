@@ -5,7 +5,7 @@ PROJECT_ID=my-project2-303004
 IMAGE_NAME=api-sample-image
 CONTAINER_NAME=api-sample-container
 HOST_ADRESS=0.0.0.0
-PORT=5000
+PORT=8080
 
 #-----------------------
 # CI/CD トリガー発行
@@ -41,16 +41,16 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
-        BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
-        gcloud builds describe ${BUILD_ID}
+        #BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
+        #gcloud builds describe ${BUILD_ID}
 
         # API 実行（デプロイした docker image 実行）
         docker run -it --rm -d --name ${CONTAINER_NAME} gcr.io/${PROJECT_ID}/${IMAGE_NAME}
         docker logs ${CONTAINER_NAME}
 
         # テスト実行（リクエスト処理）
-        python api/request.py --host 0.0.0.0 --port 5000 --request_value 1 --debug
-        python api/request.py --host 0.0.0.0 --port 5000 --request_value 0 --debug
+        python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 1 --debug
+        python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 0 --debug
         break
     elif [ ${BUILD_STATUS} = "FAILURE" ] ; then
         echo "${BUILD_STATUS} : ビルド失敗"

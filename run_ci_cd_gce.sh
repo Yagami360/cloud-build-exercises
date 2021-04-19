@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 TRIGER_BRANCH_NAME=gce
+HOST_ADRESS=0.0.0.0
+PORT=8080
 
 #-----------------------
 # CI/CD トリガー発行
@@ -31,12 +33,12 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
-        BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
-        gcloud builds describe ${BUILD_ID}
+        #BUILD_ID=`gcloud builds list | sed -n 2p | awk '{print $1}'`
+        #gcloud builds describe ${BUILD_ID}
 
         # テスト実行（リクエスト処理）
-        #python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 1 --debug
-        #python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 0 --debug
+        python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 1 --debug
+        python api/request.py --host ${HOST_ADRESS} --port ${PORT} --request_value 0 --debug
         break
     elif [ ${BUILD_STATUS} = "FAILURE" ] ; then
         echo "${BUILD_STATUS} : ビルド失敗"

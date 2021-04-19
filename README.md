@@ -35,8 +35,9 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 
     - GCE 用 : `cloudbuild/cloudbuild_gce.yml`<br>
         <img src="https://user-images.githubusercontent.com/25688193/115104516-e66f6100-9f93-11eb-985c-2077ffb99357.png" width="400"><br>
-
+    - Cloud Run 用 : `cloudbuild/cloudbuild_cloud_run.yml`<br>
     - GKE 用 : 準備中<br>
+
 
 
 > これらの処理を CLI で自動化できないか？
@@ -49,25 +50,13 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 	```
 
 - GCE 環境での CI/CD<br>
-	```sh
-	$ sh run_ci_cd_gce.sh
-	```
+    準備中 ...
 
-    <!--
-	1. `git push` をトリガーに、Container Registry に API コードの docker image を作成 & 登録
-    1. GCE インスタンスを作成
-	1. GCE インスタンスにリクエスト処理を実行し、正しいレスポンスが返ってくるか確認
-    -->
+- Cloud Run 環境での CI/CD<br>
+    ```sh
+    $ sh run_ci_cd_clould_run.sh
+    ```
 
 - GKE 環境での CI/CD<br>
     準備中...
 
-
-<!--
-	```sh
-	$ sh run_ci_cd_gke.sh
-	```
-	1. `git push` をトリガーに、Google Container Registry に API コードの docker image をアップロード
-	1. GKE クラスタ作成
-	1. 
--->

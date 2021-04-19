@@ -3,9 +3,9 @@
 steps:
   # キャッシュされたイメージを Container Registry から pull
   # 初めてイメージをビルドする際は docker pull で pull できる既存のイメージがないため、entrypoint を bash に設定し、コマンドの実行で返されるエラーを無視できるようにしている
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args: ['-c', 'docker pull gcr.io/${PROJECT_ID}/api-sample-image:latest || exit 0']
+  #- name: 'gcr.io/cloud-builders/docker'
+  #  entrypoint: 'bash'
+  #  args: ['-c', 'docker pull gcr.io/${PROJECT_ID}/api-sample-image:latest || exit 0']
 
 # Container Registry 上で docker image 作成
   - name: 'gcr.io/cloud-builders/docker'  # Docker を実行するコンテナイメージ

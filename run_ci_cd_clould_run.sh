@@ -29,9 +29,9 @@ BUILD_ID=`gcloud builds list | sed -n 2p | sed 's/ //g' | awk '{print $1}'`
 
 while :
 do
+    sleep 5
     BUILD_STATUS=`gcloud builds list | sed -n 2p | sed 's/ (+. more//g' | awk '{print $6}'`
     echo "${BUILD_STATUS} : ビルド実行中..."
-    sleep 5
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"

@@ -33,12 +33,12 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
-        sleep 5
         BUILD_ID=`gcloud builds list | sed -n 2p | sed 's/ //g' | awk '{print $1}'`
         gcloud builds describe ${BUILD_ID}
 
         # テスト実行（リクエスト処理）
         CLOUD_RUN_URL=`gcloud run services list --platform managed | grep ${SERVICE_NAME} | awk '{print $4}'`
+        echo "CLOUD_RUN_URL : ${CLOUD_RUN_URL}"
         python api/request.py --url ${CLOUD_RUN_URL} --use_url --request_value 1 --debug
         python api/request.py --url ${CLOUD_RUN_URL} --use_url --request_value 0 --debug
         break

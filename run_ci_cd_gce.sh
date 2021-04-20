@@ -1,12 +1,49 @@
 #!/bin/sh
 set -eu
-TRIGER_BRANCH_NAME=gce
+GITHUB_REPOGITRY_NAME=cloud-build-exercises
+GITHUB_USER_NAME=Yagami360
+CLOUD_BUILD_YAML_FILE_PATH="cloudbuild/cloudbuild_gce.yml"   # ビルド構成ファイルのパス
+
+TRIGER_BRANCH_NAME=gce      # CI/CD トリガーを発行する git ブランチ名
 HOST_ADRESS=0.0.0.0
 PORT=8080
 
-#-----------------------
+#------------------------------------------
+# 各種APIサービスを有効化する。
+#------------------------------------------
+gcloud services enable \
+    cloudbuild.googleapis.com \             # Cloud Build API
+    compute.googleapis.com \                # Compute Engine API
+    containerregistry.googleapis.com \      # Container Registry API
+    cloudresourcemanager.googleapis.com     # Cloud Resource Manager API
+
+#------------------------------------------
+# 本レポジトリの Cloud Source Repositories への登録（ミラーリング）
+#------------------------------------------
+# [ToDo] CLI で自動化
+
+#------------------------------------------
+# Cloud Build と GitHub の連携設定
+#------------------------------------------
+# [ToDo] CLI で自動化
+
+#------------------------------------------
+# CI/CD を行う GCP サービスの IAM 権限設定
+#------------------------------------------
+# [ToDo] CLI で自動化
+
+#------------------------------------------
+# CI/CD を行うトリガーとビルド構成ファイルの反映
+#------------------------------------------
+gcloud beta builds triggers create github \
+    --repo-name=${GITHUB_REPOGITRY_NAME} \
+    --repo-owner=${GITHUB_USER_NAME} \
+    --branch-pattern=${TRIGER_BRANCH_NAME} \
+    --build-config=${CLOUD_BUILD_YAML_FILE_PATH}
+
+#------------------------------------------
 # CI/CD トリガー発行
-#-----------------------
+#------------------------------------------
 # ${TRIGER_BRANCH_NAME} ブランチが存在しない場合
 if [ "`git branch | grep ${TRIGER_BRANCH_NAME} | sed 's/ //g' | sed 's/*//g'`" != "${TRIGER_BRANCH_NAME}" ] ; then
     git checkout -b ${TRIGER_BRANCH_NAME}
@@ -22,9 +59,9 @@ git commit -m "run ci/cd on ${TRIGER_BRANCH_NAME} branch"
 git push origin ${TRIGER_BRANCH_NAME}
 sleep 10
 
-#-----------------------
+#------------------------------------------
 # ビルド待ち＆テスト処理
-#-----------------------
+#------------------------------------------
 while :
 do
     BUILD_STATUS=`gcloud builds list | sed -n 2p | sed 's/ (+. more//g' | awk '{print $6}'`

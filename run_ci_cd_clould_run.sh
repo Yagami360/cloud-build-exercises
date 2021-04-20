@@ -9,6 +9,34 @@ PROJECT_ID=my-project2-303004       # GCP のプロジェクト名
 SERVICE_NAME=cloud-build-sample     # Clould Run の名前
 
 #------------------------------------------
+# 各種APIサービスを有効化する。
+#------------------------------------------
+# cloudbuild.googleapis.com : Cloud Build API
+# run.googleapis.com : Cloud Run Admin API
+# containerregistry.googleapis.com : Container Registry API
+# cloudresourcemanager.googleapis.com : Cloud Resource Manager API
+gcloud services enable \
+    cloudbuild.googleapis.com \
+    run.googleapis.com \
+    containerregistry.googleapis.com \
+    cloudresourcemanager.googleapis.com
+
+#------------------------------------------
+# 本レポジトリの Cloud Source Repositories への登録（ミラーリング）
+#------------------------------------------
+# [ToDo] CLI で自動化
+
+#------------------------------------------
+# Cloud Build と GitHub の連携設定
+#------------------------------------------
+# [ToDo] CLI で自動化
+
+#------------------------------------------
+# CI/CD を行う GCP サービスの IAM 権限設定
+#------------------------------------------
+# [ToDo] CLI で自動化
+
+#------------------------------------------
 # CI/CD を行うトリガーとビルド構成ファイルの反映
 #------------------------------------------
 gcloud beta builds triggers create github \
@@ -17,9 +45,9 @@ gcloud beta builds triggers create github \
     --branch-pattern=${TRIGER_BRANCH_NAME} \
     --build-config=${CLOUD_BUILD_YAML_FILE_PATH}
 
-#-----------------------
+#------------------------------------------
 # CI/CD トリガー発行
-#-----------------------
+#------------------------------------------
 # ${TRIGER_BRANCH_NAME} ブランチが存在しない場合
 if [ "`git branch | grep ${TRIGER_BRANCH_NAME} | sed 's/ //g' | sed 's/*//g'`" != "${TRIGER_BRANCH_NAME}" ] ; then
     git checkout -b ${TRIGER_BRANCH_NAME}
@@ -35,9 +63,9 @@ git commit -m "run ci/cd on ${TRIGER_BRANCH_NAME} branch"
 git push origin ${TRIGER_BRANCH_NAME}
 sleep 10
 
-#-----------------------
+#------------------------------------------
 # ビルド待ち＆テスト処理
-#-----------------------
+#------------------------------------------
 while :
 do
     BUILD_STATUS=`gcloud builds list | sed -n 2p | sed 's/ (+. more//g' | awk '{print $6}'`

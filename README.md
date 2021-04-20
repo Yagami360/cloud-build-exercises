@@ -6,6 +6,8 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 
 ## ■ 使用法
 
+<a id="事前準備"></a>
+
 ### ◎ 事前準備
 
 1. 本レポジトリの Cloud Source Repositories への登録（ミラーリング）<br>
@@ -62,3 +64,5 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 - GKE 環境での CI/CD<br>
     準備中...
 
+## ■ ToDO
+- [ ] [事前準備](#事前準備)の処理を CLI で自動化する

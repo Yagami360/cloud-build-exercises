@@ -1,15 +1,47 @@
 #!/bin/sh
 set -eu
-TRIGER_BRANCH_NAME=local
-PROJECT_ID=my-project2-303004
+GITHUB_REPOGITRY_NAME=cloud-build-exercises
+GITHUB_USER_NAME=Yagami360
+CLOUD_BUILD_YAML_FILE_PATH="cloudbuild/cloudbuild_gce.yml"   # ビルド構成ファイルのパス
+
+TRIGER_BRANCH_NAME=local                    # CI/CD トリガーを発行する git ブランチ名
+PROJECT_ID=my-project2-303004               # GCP プロジェクト名
+
 IMAGE_NAME=api-sample-image
 CONTAINER_NAME=api-sample-container
 HOST_ADRESS=0.0.0.0
 PORT=8080
 
-#-----------------------
+#------------------------------------------
+# 各種APIサービスを有効化する。
+#------------------------------------------
+gcloud services enable \
+    cloudbuild.googleapis.com \             # Cloud Build API
+    containerregistry.googleapis.com \      # Container Registry API
+    cloudresourcemanager.googleapis.com     # Cloud Resource Manager API
+
+#------------------------------------------
+# 本レポジトリの Cloud Source Repositories への登録（ミラーリング）
+#------------------------------------------
+# [ToDo] CLI で自動化
+
+#------------------------------------------
+# Cloud Build と GitHub の連携設定
+#------------------------------------------
+# [ToDo] CLI で自動化
+
+#------------------------------------------
+# CI/CD を行うトリガーとビルド構成ファイルの反映
+#------------------------------------------
+gcloud beta builds triggers create github \
+    --repo-name=${GITHUB_REPOGITRY_NAME} \
+    --repo-owner=${GITHUB_USER_NAME} \
+    --branch-pattern=${TRIGER_BRANCH_NAME} \
+    --build-config=${CLOUD_BUILD_YAML_FILE_PATH}
+
+#------------------------------------------
 # CI/CD トリガー発行
-#-----------------------
+#------------------------------------------
 # ${TRIGER_BRANCH_NAME} ブランチが存在しない場合
 if [ "`git branch | grep ${TRIGER_BRANCH_NAME} | sed 's/ //g' | sed 's/*//g'`" != "${TRIGER_BRANCH_NAME}" ] ; then
     git checkout -b ${TRIGER_BRANCH_NAME}
@@ -25,14 +57,14 @@ git commit -m "run ci/cd on ${TRIGER_BRANCH_NAME} branch"
 git push origin ${TRIGER_BRANCH_NAME}
 sleep 10
 
-#-----------------------
+#------------------------------------------
 # Container Registry とやり取りするときに Container Registry 認証情報を使用するよう Docker を構成
-#-----------------------
+#------------------------------------------
 gcloud auth configure-docker
 
-#-----------------------
+#------------------------------------------
 # ビルド待ち＆テスト処理
-#-----------------------
+#------------------------------------------
 while :
 do
     BUILD_STATUS=`gcloud builds list | sed -n 2p | sed 's/ (+. more//g' | awk '{print $6}'`

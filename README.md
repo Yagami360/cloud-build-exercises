@@ -19,7 +19,6 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
         <img src="https://user-images.githubusercontent.com/25688193/115101438-1fe9a180-9f7f-11eb-9608-063b58a80c77.png" width="400"><br>
 
 1. Cloud Build と GitHub の連携設定<br>
-    1. [Cloud Build API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com&hl=ja&_ga=2.133252557.250387494.1618392272-443250432.1618392272) を有効化<br>
     1. [Cloud Build GitHub アプリ](https://github.com/marketplace/google-cloud-build) を GitHub に認証する。<br>
         <img src="https://user-images.githubusercontent.com/25688193/115101875-7b695e80-9f82-11eb-8dd6-4107b46dbd18.png" width="300"><br>
     1. Cloud Build GitHub アプリの認証完了後、Cloud Build の GitHub レポジトリの接続設定画面が表示されるので、本レポジトリを設定する。<br>
@@ -28,20 +27,6 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 
 1. CI/CD を行う GCP サービスの IAM 権限設定<br>
     「[Cloud Build のサービス アカウント権限](https://console.cloud.google.com/cloud-build/settings/service-account?folder=&organizationId=&project=my-project2-303004)」のページで、Cloud Build で CI/CD を行う GCP サービスの IAM 権限を有効化する。<br>
-
-<!--
-1. CI/CD を行うトリガーと `cloudbuild.yml` の設定<br>
-    1. [Cloud Build のコンソール画面](https://console.cloud.google.com/cloud-build/triggers?folder=&organizationId=&project=my-project2-303004) から、CI/CD を行うトリガー（git push など）の設定と `cloudbuild` ディレクトリ以下の `cloudbuild.yml` の反映を行う。
-
-        > README.md や .gitignore などのトリガーに含またくないファイルに関しても、この画面の「無視されるファイルフィルタ」から設定できる。
-
-        - GCE 用 : `cloudbuild/cloudbuild_gce.yml`<br>
-        <img src="https://user-images.githubusercontent.com/25688193/115104516-e66f6100-9f93-11eb-985c-2077ffb99357.png" width="400"><br>
-        - Cloud Run 用 : `cloudbuild/cloudbuild_cloud_run.yml`<br>
-        - GKE 用 : 準備中<br>
-
-> これらの処理を CLI で自動化できないか？
--->
 
 ### ◎ CI/CD 処理
 

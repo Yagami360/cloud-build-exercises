@@ -30,12 +30,12 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 1. CI/CD を行うトリガーと `cloudbuild.yml` の設定<br>
     1. [Cloud Build のコンソール画面](https://console.cloud.google.com/cloud-build/triggers?folder=&organizationId=&project=my-project2-303004) から、CI/CD を行うトリガー（git push など）の設定と `cloudbuild` ディレクトリ以下の `cloudbuild.yml` の反映を行う。
 
-    > README.md や .gitignore などのトリガーに含またくないファイルに関しても、この画面の「無視されるファイルフィルタ」から設定できる。
+        > README.md や .gitignore などのトリガーに含またくないファイルに関しても、この画面の「無視されるファイルフィルタ」から設定できる。
 
-    - GCE 用 : `cloudbuild/cloudbuild_gce.yml`<br>
+        - GCE 用 : `cloudbuild/cloudbuild_gce.yml`<br>
         <img src="https://user-images.githubusercontent.com/25688193/115104516-e66f6100-9f93-11eb-985c-2077ffb99357.png" width="400"><br>
-    - Cloud Run 用 : `cloudbuild/cloudbuild_cloud_run.yml`<br>
-    - GKE 用 : 準備中<br>
+        - Cloud Run 用 : `cloudbuild/cloudbuild_cloud_run.yml`<br>
+        - GKE 用 : 準備中<br>
 
 > これらの処理を CLI で自動化できないか？
 

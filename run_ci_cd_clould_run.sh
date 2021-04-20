@@ -2,9 +2,10 @@
 set -eu
 GITHUB_REPOGITRY_NAME=cloud-build-exercises
 GITHUB_USER_NAME=Yagami360
-CLOUD_BUILD_YAML_FILE_PATH="cloudbuild/cloudbuild_cloud_run.yml"   # ビルド構成ファイルのパス
+CLOUD_BUILD_YAML_FILE_PATH="cloudbuild/cloudbuild_cloud_run.yml"    # ビルド構成ファイルのパス
+TRUGER_NAME=push-trigger-cloud-run                                  # CI/CD トリガー名
+TRIGER_BRANCH_NAME=cloud_run                                        # CI/CD トリガーを発行する git ブランチ名
 
-TRIGER_BRANCH_NAME=cloud_run        # CI/CD トリガーを発行する git ブランチ名
 PROJECT_ID=my-project2-303004       # GCP のプロジェクト名
 SERVICE_NAME=cloud-build-sample     # Clould Run の名前
 
@@ -40,6 +41,7 @@ gcloud services enable \
 # CI/CD を行うトリガーとビルド構成ファイルの反映
 #------------------------------------------
 gcloud beta builds triggers create github \
+    --name=${TRUGER_NAME} \
     --repo-name=${GITHUB_REPOGITRY_NAME} \
     --repo-owner=${GITHUB_USER_NAME} \
     --branch-pattern=${TRIGER_BRANCH_NAME} \

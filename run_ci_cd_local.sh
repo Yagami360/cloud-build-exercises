@@ -33,12 +33,14 @@ gcloud services enable \
 #------------------------------------------
 # CI/CD を行うトリガーとビルド構成ファイルの反映
 #------------------------------------------
-gcloud beta builds triggers create github \
-    --name=${TRUGER_NAME} \
-    --repo-name=${GITHUB_REPOGITRY_NAME} \
-    --repo-owner=${GITHUB_USER_NAME} \
-    --branch-pattern=${TRIGER_BRANCH_NAME} \
-    --build-config=${CLOUD_BUILD_YAML_FILE_PATH}
+if [ `gcloud beta builds triggers list | grep "name: ${TRUGER_NAME}"` = "name: ${TRUGER_NAME}" ] ; then
+    gcloud beta builds triggers create github \
+        --name=${TRUGER_NAME} \
+        --repo-name=${GITHUB_REPOGITRY_NAME} \
+        --repo-owner=${GITHUB_USER_NAME} \
+        --branch-pattern=${TRIGER_BRANCH_NAME} \
+        --build-config=${CLOUD_BUILD_YAML_FILE_PATH}
+fi
 
 #------------------------------------------
 # CI/CD トリガー発行

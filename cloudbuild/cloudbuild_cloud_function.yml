@@ -2,7 +2,7 @@
 substitutions:
   _SERVICE_NAME: cloud-build-sample   # 作成する cloud function 名
   _SOURCE_CODE_DIR: ./api             # API ソースコードのディレクトリ
-  _ENTRY_POINT: "hello_world"         # cloud function のエントリーポイント
+  _ENTRY_POINT: "responce"            # cloud function のエントリーポイント
   _REGION: us-central1                # cloud function を作成するリージョン
 
 # name タグ : コマンドを実行するコンテナイメージ

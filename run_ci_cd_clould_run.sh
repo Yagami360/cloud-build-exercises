@@ -10,7 +10,7 @@ PROJECT_ID=my-project2-303004       # GCP のプロジェクト名
 SERVICE_NAME=cloud-build-sample     # Clould Run の名前
 
 #------------------------------------------
-# 各種APIサービスを有効化する。
+# 各種APIサービスを有効化する。 
 #------------------------------------------
 # cloudbuild.googleapis.com : Cloud Build API
 # run.googleapis.com : Cloud Run Admin API

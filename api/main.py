@@ -29,6 +29,7 @@ def hello_world():
 # "http://host_ip:port_id/api_server" にリクエスト送信時の処理
 #================================================================
 # Cloud Function 上で動作する API コードは、エントリーポイントで引数をとる
+@app.route('/api_server', methods=['POST'])
 def responce(request):
     print( "リクエスト受け取り" )
     if( app.debug ):

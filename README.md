@@ -32,7 +32,7 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 
 - ローカル環境での CI/CD : <br>
 	```sh
-	$ sh run_ci_cd_local.sh
+	$ sh run_cicd_local.sh
 	```
 
 - GCE 環境での CI/CD<br>
@@ -40,7 +40,7 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 
 - Cloud Run 環境での CI/CD<br>
     ```sh
-    $ sh run_ci_cd_clould_run.sh
+    $ sh run_cicd_clould_run.sh
     ```
 
 - Cloud Function 環境での CI/CD<br>

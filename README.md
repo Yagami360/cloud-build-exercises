@@ -44,7 +44,9 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
     ```
 
 - Cloud Function 環境での CI/CD<br>
-    準備中...
+    ```sh
+    $ sh run_cicd_clould_function.sh
+    ```
 
 - GKE 環境での CI/CD<br>
     準備中...

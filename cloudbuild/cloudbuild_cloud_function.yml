@@ -1,0 +1,23 @@
+# 変数値の置換
+substitutions:
+  _SERVICE_NAME: cloud-build-sample   # 作成する cloud function 名
+  _SOURCE_CODE_DIR: ./api             # API ソースコードのディレクトリ
+  _ENTRY_POINT: "responce"            # cloud function のエントリーポイント
+  _REGION: us-central1                # cloud function を作成するリージョン
+
+# name タグ : コマンドを実行するコンテナイメージ
+# entrypoint タグ : name で指定したコンテナイメージのデフォルトのエントリーポイント（dockerコンテナなら docker コマンドなど）を使用しない場合に指定
+steps:
+  # Cloud Function 作成し、API のソースコードを Cloud Function にデプロイ
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: [
+      'functions', 'deploy', '${_SERVICE_NAME}', 
+      '--source=${_SOURCE_CODE_DIR}',
+      '--entry-point=${_ENTRY_POINT}',
+      '--region', '${_REGION}', 
+      '--memory', '128MB',
+      '--runtime', 'python37',
+      '--trigger-http',
+      '--allow-unauthenticated'   # IAM 認証なし
+    ]

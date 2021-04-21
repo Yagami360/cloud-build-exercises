@@ -84,7 +84,6 @@ do
 
     if [ ${BUILD_STATUS} = "SUCCESS" ] ; then
         echo "${BUILD_STATUS} : ビルド成功"
-
         kubectl get pods
         kubectl get deployments
         kubectl get service

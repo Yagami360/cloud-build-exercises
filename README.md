@@ -49,7 +49,9 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
     ```
 
 - GKE 環境での CI/CD<br>
-    準備中...
+    ```sh
+    $ sh run_cicd_gke.sh
+    ```
 
 ## ■ ToDO
 - [ ] [事前準備](#事前準備)の処理を CLI で自動化する

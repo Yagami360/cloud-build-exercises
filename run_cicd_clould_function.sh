@@ -42,7 +42,7 @@ gcloud services enable \
 #------------------------------------------
 # CI/CD を行うトリガーとビルド構成ファイルの反映
 #------------------------------------------
-if [ `gcloud beta builds triggers list | grep "name: ${TRUGER_NAME}"` = "name: ${TRUGER_NAME}" ] ; then
+if [ `gcloud beta builds triggers list | grep "name: ${TRUGER_NAME}"` = "" ] ; then
     gcloud beta builds triggers create github \
         --name=${TRUGER_NAME} \
         --repo-name=${GITHUB_REPOGITRY_NAME} \

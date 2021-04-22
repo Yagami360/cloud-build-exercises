@@ -48,10 +48,21 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
     $ sh run_cicd_clould_function.sh
     ```
 
-- GKE 環境での CI/CD<br>
+- GKE 環境（CPU動作）での CI/CD<br>
     ```sh
     $ sh run_cicd_gke.sh
     ```
 
+- GKE 環境（GPU動作）での CI/CD<br>
+    準備中...
+    <!--
+    ```sh
+    $ sh run_cicd_gke_gpu.sh
+    ```
+    -->
+
 ## ■ ToDO
 - [ ] [事前準備](#事前準備)の処理を CLI で自動化する
+- [ ] ローカル環境での CI/CD がうまく動作するようにする
+- [ ] GCE 環境での CI/CD がうまく動作するようにする
+- [ ] GKE 環境での CI/CD において、`cloudbuild_gke.yml` 内で GKE クラスタを作成できるようにする

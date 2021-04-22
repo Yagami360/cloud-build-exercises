@@ -26,18 +26,28 @@ steps:
   # Container Registry 上で docker image を登録
   - name: 'gcr.io/cloud-builders/docker'
     id: docker push
-    args: ['push', 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:${COMMIT_SHA}']
+    args: ['push', 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:latest']
+
+  # docker image に SHORT_SHA タグを付与
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Add tag to image
+    args:
+    - 'container'
+    - 'images'
+    - 'add-tag'
+    - 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:latest'
+    - 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:${SHORT_SHA}'
 
   # Cloud Run 作成し、docker image を Cloud Run にデプロイ
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args: [
       'run', 'deploy', '${_SERVICE_NAME}', 
-      '--image', 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:${COMMIT_SHA}', 
+      '--image', 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:latest', 
       '--region', '${_REGION}', 
       '--platform', 'managed',
       '--allow-unauthenticated'   # IAM 認証なし
     ]
 
 # ビルド完了後の docker image を Container Registry に保管
-images: ['gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:${COMMIT_SHA}']
+images: ['gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:latest']

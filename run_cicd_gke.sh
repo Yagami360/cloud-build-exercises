@@ -60,11 +60,15 @@ fi
 #------------------------------------------
 # GKE クラスタを作成する
 #------------------------------------------
-gcloud container clusters create ${CLUSTER_NAME} \
-    --project=${PROJECT_ID} \
-    --zone=${REGION} \
-    --num-nodes=${NUM_NODES} \
-    --machine-type n1-standard-4
+if [ ! "$(gcloud container clusters list | grep ${CLUSTER_NAME})" ] ; then
+    gcloud container clusters create ${CLUSTER_NAME} \
+        --project=${PROJECT_ID} \
+        --zone=${REGION} \
+        --num-nodes=${NUM_NODES} \
+        --machine-type n1-standard-1
+
+    #sleep 30
+fi
 
 #------------------------------------------
 # CI/CD トリガー発行

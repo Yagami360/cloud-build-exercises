@@ -55,6 +55,15 @@ steps:
   #    '--machine-type', 'n1-standard-4'
   #  ]
 
+  # クラスタの認証情報を取得。作成したクラスタを使用するように kubectl が構成される
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: gcloud container clusters get-credentials
+    args: [ 
+      'container', 'clusters', 'get-credentials', '${_CLUSTER_NAME}', 
+      '--project', '${PROJECT_ID}',
+      '--zone', '${_REGION}', 
+    ]
+
   # GKE の Pod と Deployment を作成する
   - name: 'gcr.io/cloud-builders/kubectl'
     id: make pod and deployment

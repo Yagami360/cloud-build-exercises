@@ -44,16 +44,17 @@ steps:
     - 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:${SHORT_SHA}'
 
   # GKE クラスタ作成
-  #- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #  id: make gke cluster
-  #  entrypoint: gcloud
-  #  args: [
-  #    'container', 'clusters', 'create', '${_CLUSTER_NAME}', 
-  #    '--project', '${PROJECT_ID}', 
-  #    '--zone', '${_REGION}',
-  #    '--num-nodes', '${_NUM_NODE}', 
-  #    '--machine-type', 'n1-standard-4'
-  #  ]
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: make gke cluster
+    entrypoint: gcloud
+    args: [
+      'container', 'clusters', 'create', '${_CLUSTER_NAME}', 
+      '--project', '${PROJECT_ID}', 
+      '--zone', '${_REGION}',
+      '--num-nodes', '${_NUM_NODE}', 
+      '--machine-type', 'n1-standard-1',
+      '--preemptible'
+    ]
 
   # クラスタの認証情報を取得。作成したクラスタを使用するように kubectl が構成される
   - name: 'gcr.io/cloud-builders/gcloud'

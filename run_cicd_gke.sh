@@ -60,6 +60,7 @@ fi
 #------------------------------------------
 # GKE クラスタを作成する
 #------------------------------------------
+<<COMMENTOUT
 if [ ! "$(gcloud container clusters list | grep ${CLUSTER_NAME})" ] ; then
     gcloud container clusters create ${CLUSTER_NAME} \
         --project=${PROJECT_ID} \
@@ -68,8 +69,9 @@ if [ ! "$(gcloud container clusters list | grep ${CLUSTER_NAME})" ] ; then
         --machine-type n1-standard-1 \
         --preemptible
 
-    #sleep 30
+    #sleep 10
 fi
+COMMENTOUT
 
 #------------------------------------------
 # CI/CD トリガー発行

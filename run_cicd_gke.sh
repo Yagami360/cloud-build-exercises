@@ -65,7 +65,8 @@ if [ ! "$(gcloud container clusters list | grep ${CLUSTER_NAME})" ] ; then
         --project=${PROJECT_ID} \
         --zone=${REGION} \
         --num-nodes=${NUM_NODES} \
-        --machine-type n1-standard-1
+        --machine-type n1-standard-1 \
+        --preemptible
 
     #sleep 30
 fi

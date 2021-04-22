@@ -65,9 +65,14 @@ steps:
     ]
 
   # GKE の Pod と Deployment を作成する
+  # env を設定しないと、「No cluster is set. To set the cluster (and the region/zone where it is found), set the environment variables」のエラーが発生する。
   - name: 'gcr.io/cloud-builders/kubectl'
     id: make pod and deployment
     args: [ 'apply', '-f', '${_DEPLOYMENT_FILE_PATH}' ]
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=${_REGION}"
+      - "CLOUDSDK_COMPUTE_ZONE=${_REGION}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
   # GKE のサービスを公開する
   - name: 'gcr.io/cloud-builders/kubectl'

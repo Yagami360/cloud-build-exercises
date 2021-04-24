@@ -2,8 +2,6 @@
 substitutions:
   _IMAGE_NAME: api-sample-image                 # docker image 名
   _CLUSTER_NAME: cloud-build-cluster            # 作成する GKE クラスタ名
-  _POD_NAME: cloud-build-pod                    # ポッド名
-  _SERVICE_NAME: cloud-build-service            # サービス名
   _REGION: asia-northeast1-a                    # GKE クラスタを作成するリージョン
   _NUM_NODE: "3"                                # クラスタのノード数
   _DEPLOYMENT_FILE_PATH: ./k8s/deployment.yml   # Pod のデプロイメント定義ファイルのパス
@@ -76,14 +74,10 @@ steps:
       - "CLOUDSDK_COMPUTE_ZONE=${_REGION}"
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
-  # GKE のサービスを公開する
+  # GKE のサービスを作成して公開する
   - name: 'gcr.io/cloud-builders/kubectl'
     id: make service
-    args: [ 
-      'expose', 'deployment', '${_SERVICE_NAME}', 
-      '--type', 'LoadBalancer', 
-      '--port', '${_PORT}', '--target-port', '${_PORT}'
-    ]
+    args: [ 'apply', '-f', '${_SERVICE_FILE_PATH}' ]
     env:
       - "CLOUDSDK_COMPUTE_REGION=${_REGION}"
       - "CLOUDSDK_COMPUTE_ZONE=${_REGION}"

@@ -1,2 +1,7 @@
 _old
 .DS_store
+
+run_cicd_gke_gpu.sh
+cloudbuild/cloudbuild_gke_gpu.yml
+k8s/deployment_gpu.yml
+k8s/service_gpu.yml

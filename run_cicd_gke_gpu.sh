@@ -3,7 +3,7 @@ set -eu
 GITHUB_REPOGITRY_NAME=cloud-build-exercises
 GITHUB_USER_NAME=Yagami360
 CLOUD_BUILD_YAML_FILE_PATH="cloudbuild/cloudbuild_gke_gpu.yml"    # ビルド構成ファイルのパス
-TRUGER_NAME=push-trigger-gke                                      # CI/CD トリガー名
+TRUGER_NAME=push-trigger-gke-gpu                                  # CI/CD トリガー名
 TRIGER_BRANCH_NAME=gke_gpu                                        # CI/CD トリガーを発行する git ブランチ名
 
 PROJECT_ID=my-project2-303004           # GCP のプロジェクト名

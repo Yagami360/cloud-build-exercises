@@ -25,9 +25,6 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
         <img src="https://user-images.githubusercontent.com/25688193/115101942-e61a9a00-9f82-11eb-86a5-1026f41a5fdf.png" width="500"><br>
     1. 本レポジトリが、Private 公開の場合は、[非公開 GitHub リポジトリへのアクセス](https://cloud.google.com/cloud-build/docs/access-private-github-repos?hl=ja) 記載の方法で ssh 鍵等の設定を行い、Cloud Build からアクセスできるようにする。
 
-1. CI/CD を行う GCP サービスの IAM 権限設定<br>
-    「[Cloud Build のサービス アカウント権限](https://console.cloud.google.com/cloud-build/settings/service-account?folder=&organizationId=&project=my-project2-303004)」のページで、Cloud Build で CI/CD を行う GCP サービスの IAM 権限を有効化する。<br>
-
 ### ◎ CI/CD 処理
 
 - ローカル環境での CI/CD : <br>

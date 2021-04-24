@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eu
+#set -eu
 GITHUB_REPOGITRY_NAME=cloud-build-exercises
 GITHUB_USER_NAME=Yagami360
 CLOUD_BUILD_YAML_FILE_PATH="cloudbuild/cloudbuild_gke.yml"    # ビルド構成ファイルのパス
@@ -35,15 +35,22 @@ gcloud services enable \
 #------------------------------------------
 # Cloud Build と GitHub の連携設定
 #------------------------------------------
-# [ToDo] CLI で自動化
+# [ToDo] CLI で自動化 
 
 #------------------------------------------
 # CI/CD を行う GCP サービスの IAM 権限設定
 #------------------------------------------
 PROJECT_NUMBER="$(gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')"
+
+# Cloud Build サービスアカウントに「Kubernetes Engine 開発者」のロールを付与
 gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
     --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
     --role=roles/container.developer
+
+# Cloud Build サービスアカウントに「Kubernetes Engine 管理者」のロールを付与
+gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
+    --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
+    --role=roles/container.admin
 
 #------------------------------------------
 # CI/CD を行うトリガーとビルド構成ファイルの反映

@@ -1,14 +1,14 @@
 # 変数値の置換
 substitutions:
   _IMAGE_NAME: api-sample-image                 # docker image 名
-  _CLUSTER_NAME: cloud-build-cluster            # 作成する GKE クラスタ名
-  _POD_NAME: cloud-build-pod                    # ポッド名
-  _SERVICE_NAME: cloud-build-service            # サービス名
+  _CLUSTER_NAME: cloud-build-gpu-cluster        # 作成する GKE クラスタ名
+  _POD_NAME: cloud-build-gpu-pod                # ポッド名
+  _SERVICE_NAME: cloud-build-gpu-service        # サービス名
   _REGION: asia-northeast1-a                    # GKE クラスタを作成するリージョン
   _NUM_NODE: "3"                                # クラスタのノード数
-  _DEPLOYMENT_FILE_PATH: ./k8s/deployment.yml   # Pod のデプロイメント定義ファイルのパス
-  _SERVICE_FILE_PATH: ./k8s/service.yml         # サービス定義ファイルのパス
-  _PORT: "80"                                   # 公開ポート番号
+  _DEPLOYMENT_FILE_PATH: ./k8s/deployment_gpu.yml   # Pod のデプロイメント定義ファイルのパス
+  _SERVICE_FILE_PATH: ./k8s/service_gpu.yml         # サービス定義ファイルのパス
+  _PORT: "80"                                       # 公開ポート番号
 
 # name タグ : コマンドを実行するコンテナイメージ
 # entrypoint タグ : name で指定したコンテナイメージのデフォルトのエントリーポイント（dockerコンテナなら docker コマンドなど）を使用しない場合に指定

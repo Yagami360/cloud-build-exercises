@@ -7,10 +7,7 @@ TRUGER_NAME=push-trigger-gke                                  # CI/CD トリガ�
 TRIGER_BRANCH_NAME=gke                                        # CI/CD トリガーを発行する git ブランチ名
 
 PROJECT_ID=my-project2-303004       # GCP のプロジェクト名
-REGION=asia-northeast1-a
 CLUSTER_NAME=cloud-build-cluster    # GKE クラスタの名前
-NUM_NODES=3                         # クラスタの Pod 数
-#POD_NAME=cloud-build-pod           # GKE のポッド名
 SERVICE_NAME=cloud-build-service    # GKE サービス名 
 PORT=8080
 
@@ -68,20 +65,12 @@ if [ ! "$(gcloud beta builds triggers list | grep "name: ${TRUGER_NAME}")" ] ;th
 fi
 
 #------------------------------------------
-# GKE クラスタを作成する
+# GKE クラスタを作成済みの場合は削除
 #------------------------------------------
-<<COMMENTOUT
-if [ ! "$(gcloud container clusters list | grep ${CLUSTER_NAME})" ] ; then
-    gcloud container clusters create ${CLUSTER_NAME} \
-        --project=${PROJECT_ID} \
-        --zone=${REGION} \
-        --num-nodes=${NUM_NODES} \
-        --machine-type n1-standard-1 \
-        --preemptible
-
-    #sleep 10
+if [ "$(gcloud container clusters list | grep ${CLUSTER_NAME})" ] ; then
+    gcloud container clusters delete ${CLUSTER_NAME} --quiet
+    sleep 10
 fi
-COMMENTOUT
 
 #------------------------------------------
 # CI/CD トリガー発行

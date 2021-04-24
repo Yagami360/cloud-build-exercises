@@ -16,6 +16,6 @@ spec:
       - image: gcr.io/my-project2-303004/api-sample-image:latest      # Container Registry にアップロードした docker image
         name: api-sample-container                                    # コンテナ名
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           name: http-server
           

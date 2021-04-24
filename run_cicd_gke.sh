@@ -9,7 +9,7 @@ TRIGER_BRANCH_NAME=gke                                        # CI/CD トリガ�
 PROJECT_ID=my-project2-303004       # GCP のプロジェクト名
 CLUSTER_NAME=cloud-build-cluster    # GKE クラスタの名前
 SERVICE_NAME=cloud-build-service    # GKE サービス名 
-PORT=80
+PORT=8080
 
 #------------------------------------------
 # 各種APIサービスを有効化する。 

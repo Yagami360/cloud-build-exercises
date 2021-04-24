@@ -6,7 +6,6 @@ substitutions:
   _NUM_NODE: "3"                                # クラスタのノード数
   _DEPLOYMENT_FILE_PATH: ./k8s/deployment.yml   # Pod のデプロイメント定義ファイルのパス
   _SERVICE_FILE_PATH: ./k8s/service.yml         # サービス定義ファイルのパス
-  _PORT: "80"                                   # 公開ポート番号
 
 # name タグ : コマンドを実行するコンテナイメージ
 # entrypoint タグ : name で指定したコンテナイメージのデフォルトのエントリーポイント（dockerコンテナなら docker コマンドなど）を使用しない場合に指定

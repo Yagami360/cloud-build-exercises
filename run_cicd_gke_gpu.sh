@@ -9,7 +9,7 @@ TRIGER_BRANCH_NAME=gke_gpu                                        # CI/CD トリ
 PROJECT_ID=my-project2-303004           # GCP のプロジェクト名
 CLUSTER_NAME=cloud-build-gpu-cluster    # GKE クラスタの名前
 SERVICE_NAME=cloud-build-gpu-service    # GKE サービス名 
-PORT=80
+PORT=8080
 
 #------------------------------------------
 # 各種APIサービスを有効化する。 
@@ -114,6 +114,13 @@ do
         EXTERNAL_IP=`kubectl describe service ${SERVICE_NAME} | grep "LoadBalancer Ingress" | awk '{print $3}'`
         python api/request.py --host ${EXTERNAL_IP} --port ${PORT} --request_value 1 --debug
         python api/request.py --host ${EXTERNAL_IP} --port ${PORT} --request_value 0 --debug
+
+        # Pod のコンテナにアクセスして、nvidia-smi コマンド実行
+        POD_NAME_1=`kubectl get pods | awk '{print $1}' | sed -n 2p`
+        kubectl exec -i ${POD_NAME_1} <<'EOC'
+            "nvidia-smi"
+        EOC
+
         break
     elif [ ${BUILD_STATUS} = "FAILURE" ] ; then
         echo "${BUILD_STATUS} : ビルド失敗"

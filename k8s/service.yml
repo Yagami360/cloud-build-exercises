@@ -5,8 +5,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 8080
+      targetPort: 8080
       protocol: TCP
   selector:
     app: cloud-build-pod  # デプロイメント定義ファイルで定義した Pod の識別名。app:sample-pod のラベルがつけられた Pod を通信先とする

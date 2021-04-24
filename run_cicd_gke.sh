@@ -1,5 +1,5 @@
 #!/bin/sh
-#set -eu
+set -eu
 GITHUB_REPOGITRY_NAME=cloud-build-exercises
 GITHUB_USER_NAME=Yagami360
 CLOUD_BUILD_YAML_FILE_PATH="cloudbuild/cloudbuild_gke.yml"    # ビルド構成ファイルのパス
@@ -40,6 +40,7 @@ gcloud services enable \
 #------------------------------------------
 # CI/CD を行う GCP サービスの IAM 権限設定
 #------------------------------------------
+set +e
 PROJECT_NUMBER="$(gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')"
 
 # Cloud Build サービスアカウントに「Kubernetes Engine 開発者」のロールを付与
@@ -51,6 +52,8 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
 gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
     --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
     --role=roles/container.admin
+
+set -e
 
 #------------------------------------------
 # CI/CD を行うトリガーとビルド構成ファイルの反映

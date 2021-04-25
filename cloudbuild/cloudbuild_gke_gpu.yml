@@ -2,7 +2,8 @@
 substitutions:
   _IMAGE_NAME: api-sample-image                     # docker image 名
   _CLUSTER_NAME: cloud-build-gpu-cluster            # 作成する GKE クラスタ名
-  _REGION: asia-northeast1-a                        # GKE クラスタを作成するリージョン
+  #_REGION: asia-northeast1-a                        # GKE クラスタを作成するリージョン
+  _REGION: us-central1-a                            # GKE クラスタを作成するリージョン
   _NUM_NODE: "1"                                    # クラスタのノード数
   _GPU_POOL_NAME: "cloud-build-gpu-pool"            # GPU プール名 
   _GPU_TYPE: "nvidia-tesla-t4"                      # GPU の種類

@@ -7,6 +7,8 @@ TRUGER_NAME=push-trigger-gke-gpu                                  # CI/CD トリ
 TRIGER_BRANCH_NAME=gke_gpu                                        # CI/CD トリガーを発行する git ブランチ名
 
 PROJECT_ID=my-project2-303004           # GCP のプロジェクト名
+#REGION=asia-northeast1-a
+#REGION=us-west1-b
 CLUSTER_NAME=cloud-build-gpu-cluster    # GKE クラスタの名前
 SERVICE_NAME=cloud-build-gpu-service    # GKE サービス名 
 PORT=8080
@@ -69,6 +71,7 @@ fi
 #------------------------------------------
 if [ "$(gcloud container clusters list | grep ${CLUSTER_NAME})" ] ; then
     gcloud container clusters delete ${CLUSTER_NAME} --quiet
+    #gcloud container clusters delete ${CLUSTER_NAME} --quiet --region ${REGION}
     sleep 10
 fi
 

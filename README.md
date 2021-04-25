@@ -61,6 +61,6 @@ Clould Build を用いて、`git push` をトリガーに、各種 GCPリソー�
 ## ■ ToDO
 - [ ] [事前準備](#事前準備)の処理を CLI で自動化する
 - [ ] ローカル環境での CI/CD がうまく動作するようにする
-- [ ] GCE 環境での CI/CD がうまく動作するようにする
+- [x] GCE 環境での CI/CD がうまく動作するようにする
 - [ ] GKE 環境での CI/CD において、`cloudbuild_gke.yml` 内で GKE クラスタを作成できるようにする
 - [ ] GKE 環境（GPUあり）での CI/CD がうまく動作するようにする

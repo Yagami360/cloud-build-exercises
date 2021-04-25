@@ -1,0 +1,25 @@
+apiVersion: apps/v1         # Deployment の API バージョン。kubectl api-resources | grep Deployment と kubectl api-versions  | grep apps で確認可能  
+kind: Deployment            # デプロイメント定義ファイルであることを明示
+metadata:
+  name: cloud-build-gpu-pod # 識別名
+spec:
+  replicas: 1               # Pod の数
+  selector:
+    matchLabels:
+      app: cloud-build-gpu-pod  # template:metadata:labels:app と同じ値にする必要がある
+  template:                     # Pod のテンプレート。このテンプレートをもとに ReplicaSet がレプリカ数の Pod を作成する
+    metadata:
+      labels:                     # Pod をクラスタ内で識別のするためのラベル。service.yml で Pod を識別するラベルとして使用される
+        app: cloud-build-gpu-pod  # 識別名。selector:matchLabels:app と同じ値にする必要がある
+    spec:
+      restartPolicy: OnFailure    # 失敗時のみコンテナを再起動。Pod や Job 作成時に指定
+      containers:                 # Pod 内で動作させるコンテナ群の設定
+      - image: gcr.io/my-project2-303004/api-sample-image:latest      # Container Registry にアップロードした docker image
+        name: api-sample-gpu-container                                # コンテナ名
+        ports:
+        - containerPort: 8080
+          name: http-server
+    #command: ["/bin/bash"]     # 起動後一度だけ実行したいコマンドを指定。指定するとコマンド完了後 READY 0/1 となることに注意
+    resources:                  # GPU 使用時には必要
+        limits:
+        nvidia.com/gpu: 1       # GPU 数

@@ -111,7 +111,7 @@ do
         kubectl get service
 
         # テスト実行（リクエスト処理）
-        sleep 10
+        sleep 30
         EXTERNAL_IP=`kubectl describe service ${SERVICE_NAME} | grep "LoadBalancer Ingress" | awk '{print $3}'`
         python api/request.py --host ${EXTERNAL_IP} --port ${PORT} --request_value 1 --debug
         python api/request.py --host ${EXTERNAL_IP} --port ${PORT} --request_value 0 --debug

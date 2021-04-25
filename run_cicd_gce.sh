@@ -41,7 +41,7 @@ if [ ! "$(gcloud beta builds triggers list | grep "name: ${TRUGER_NAME}")" ] ;th
         --name=${TRUGER_NAME} \
         --repo-name=${GITHUB_REPOGITRY_NAME} \
         --repo-owner=${GITHUB_USER_NAME} \
-        --branch-pattern=${TRIGER_BRANCH_NAME} \
+        --branch-pattern="^${TRIGER_BRANCH_NAME}$" \
         --build-config=${CLOUD_BUILD_YAML_FILE_PATH}
 fi
 

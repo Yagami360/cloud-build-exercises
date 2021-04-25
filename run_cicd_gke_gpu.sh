@@ -60,7 +60,7 @@ if [ ! "$(gcloud beta builds triggers list | grep "name: ${TRUGER_NAME}")" ] ;th
         --name=${TRUGER_NAME} \
         --repo-name=${GITHUB_REPOGITRY_NAME} \
         --repo-owner=${GITHUB_USER_NAME} \
-        --branch-pattern=${TRIGER_BRANCH_NAME} \
+        --branch-pattern="^${TRIGER_BRANCH_NAME}$" \
         --build-config=${CLOUD_BUILD_YAML_FILE_PATH}
 fi
 
@@ -118,10 +118,7 @@ do
 
         # Pod のコンテナにアクセスして、nvidia-smi コマンド実行
         POD_NAME_1=`kubectl get pods | awk '{print $1}' | sed -n 2p`
-        kubectl exec -i ${POD_NAME_1} <<'EOC'
-            "nvidia-smi"
-        EOC
-
+        kubectl exec -i ${POD_NAME_1} -c "nvidia-smi"
         break
     elif [ ${BUILD_STATUS} = "FAILURE" ] ; then
         echo "${BUILD_STATUS} : ビルド失敗"

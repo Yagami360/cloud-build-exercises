@@ -80,6 +80,10 @@ steps:
       '--accelerator', 'type=${_GPU_TYPE},count=${_NUM_GPUS}',
       '--enable-autoscaling'
     ]
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=${_REGION}"
+      - "CLOUDSDK_COMPUTE_ZONE=${_REGION}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
   # DaemonSet での Pod 経由で、ノードプールに GPU ドライバーをインストール
   - name: 'gcr.io/cloud-builders/kubectl'
